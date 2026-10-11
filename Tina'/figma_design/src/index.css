@@ -1,0 +1,231 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,500&display=swap');
+@import 'tailwindcss';
+
+:root {
+  font-family: 'DM Sans', sans-serif;
+  color: #263229;
+  background: #f6f5f0;
+  font-synthesis: none;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; }
+button, input { font: inherit; }
+button { cursor: pointer; }
+
+.app-shell { --ink: #263229; --muted: #7f897f; --primary: #263c30; --accent: #b56949; --panel: #ffffff; --soft: #e6eadb; --canvas: #f6f5f0; --line: #deded6; min-height: 100vh; color: var(--ink); background: var(--canvas); transition: color .35s ease, background .35s ease; }
+.sidebar { z-index: 20; position: fixed; left: 22px; right: 22px; bottom: 18px; height: 68px; padding: 8px 12px; display: grid; grid-template-columns: 180px 1fr 210px; align-items: center; border: 1px solid #ffffff24; border-radius: 18px; background: #203128ed; color: #e8ece5; box-shadow: 0 14px 45px #1c2b2238; backdrop-filter: blur(16px); }
+.brand { display: flex; align-items: center; gap: 11px; padding: 0 10px; font-family: 'Newsreader', serif; font-size: 17px; letter-spacing: .16em; }
+.brand-mark { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 50%; color: #203128; background: #dbe7c9; }
+.nav-list { display: flex; align-items: center; justify-content: center; gap: 5px; }
+.nav-item { display: flex; align-items: center; gap: 8px; padding: 11px 13px; border: 0; border-radius: 10px; color: #aebbb3; background: transparent; font-size: 12px; text-align: left; transition: .2s ease; white-space: nowrap; }
+.nav-item:hover, .nav-item.active { color: #fff; background: #34483d; }
+.sidebar-bottom { display: flex; align-items: center; justify-content: flex-end; }
+.sidebar-bottom > .nav-item { width: auto; }
+.profile { padding-left: 9px; display: grid; grid-template-columns: 38px 1fr auto; align-items: center; gap: 10px; }
+.avatar { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 50%; background: #d9c2a6; color: #203128; font-size: 12px; font-weight: 600; }
+.profile strong, .profile span { display: block; }
+.profile strong { font-size: 12px; font-weight: 600; }
+.profile span { margin-top: 3px; color: #93a097; font-size: 11px; }
+
+main { max-width: 1440px; margin: auto; overflow: hidden; padding: 36px clamp(28px, 5vw, 84px) 130px; }
+header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+.eyebrow, .mini-stat > span, .weather-card span, .outfit-info span, .clothing-card span { color: #7f897f; font-size: 10px; font-weight: 600; letter-spacing: .15em; }
+h1, h2, h3, p { margin: 0; }
+h1, h2 { font-family: 'Newsreader', serif; font-weight: 500; }
+h1 { margin-top: 5px; font-size: clamp(34px, 4vw, 47px); line-height: 1; }
+header p { margin-top: 8px; color: #778078; font-size: 14px; }
+.header-actions { display: flex; gap: 10px; }
+.header-avatar { width: 43px; height: 43px; display: grid; place-items: center; border: 0; border-radius: 50%; color: #263229; background: #d9c2a6; font-size: 12px; font-weight: 600; }
+.icon-button, .add-button, .refresh-button, .heart-button { border: 0; display: inline-flex; align-items: center; justify-content: center; }
+.icon-button { width: 43px; height: 43px; border: 1px solid #d8d9d1; border-radius: 50%; color: #48544c; background: #fff; }
+.add-button { gap: 8px; padding: 0 18px; border-radius: 22px; color: #fff; background: #263c30; font-size: 13px; }
+.search-bar { max-width: 460px; margin: -15px 0 22px auto; padding: 10px 16px; display: flex; align-items: center; gap: 10px; border: 1px solid #d9d9d1; border-radius: 12px; background: #fff; }
+.search-bar input { width: 100%; border: 0; outline: 0; background: transparent; }
+
+.design-picker { margin-bottom: 22px; padding: 11px 12px 11px 18px; display: flex; align-items: center; justify-content: space-between; gap: 22px; border: 1px solid var(--line); border-radius: 14px; background: var(--panel); }
+.picker-intro span, .picker-intro strong { display: block; white-space: nowrap; }
+.picker-intro span { color: var(--muted); font-size: 9px; font-weight: 600; letter-spacing: .15em; }
+.picker-intro strong { margin-top: 2px; font-family: 'Newsreader', serif; font-size: 17px; font-weight: 500; }
+.theme-options { display: flex; gap: 5px; }
+.theme-options button { min-width: 102px; padding: 9px 11px; display: flex; align-items: center; gap: 7px; border: 1px solid transparent; border-radius: 9px; color: var(--muted); background: transparent; font-size: 11px; }
+.theme-options button:hover { background: color-mix(in srgb, var(--soft), transparent 50%); }
+.theme-options button.active { border-color: var(--line); color: var(--ink); background: var(--soft); }
+.theme-options i { width: 9px; height: 9px; flex: 0 0 auto; border-radius: 50%; }
+.theme-dot-botanique { background: #31483b; }
+.theme-dot-editorial { background: #171717; }
+.theme-dot-solaire { background: #c85e36; }
+.theme-dot-cobalt { background: #2855d9; }
+.theme-dot-nocturne { background: #9a82ff; }
+.theme-number { font-size: 8px; opacity: .55; }
+
+.stats-row { display: grid; grid-template-columns: 1.5fr repeat(3, 1fr); border: 1px solid #deded6; border-radius: 14px; background: #fff; overflow: hidden; }
+.weather-card, .mini-stat { min-height: 105px; padding: 22px 24px; }
+.weather-card { display: flex; align-items: center; gap: 18px; }
+.weather-icon { width: 50px; height: 50px; display: grid; place-items: center; border-radius: 50%; color: #986f2e; background: #f3ead3; }
+.weather-card strong { margin-left: 12px; font-family: 'Newsreader', serif; font-size: 28px; }
+.weather-card p, .mini-stat p { margin-top: 5px; color: #93998f; font-size: 12px; }
+.mini-stat { border-left: 1px solid #e5e4dc; }
+.mini-stat strong { display: block; margin-top: 7px; font-family: 'Newsreader', serif; font-size: 31px; line-height: 1; }
+.accent-stat { background: #f1ecdf; }
+
+.generator { margin-top: 24px; display: grid; grid-template-columns: 1.03fr .97fr; min-height: 448px; border-radius: 18px; overflow: hidden; background: #e6eadb; }
+.generator-copy { padding: clamp(35px, 5vw, 62px); }
+.section-kicker { display: flex; align-items: center; gap: 7px; color: #62704f; font-size: 10px; font-weight: 600; letter-spacing: .14em; }
+.generator h2 { max-width: 430px; margin-top: 17px; font-size: clamp(36px, 4vw, 52px); line-height: .99; }
+.generator-copy > p { max-width: 475px; margin-top: 17px; color: #6f796f; font-size: 14px; line-height: 1.65; }
+.generator label { display: block; margin: 28px 0 10px; font-size: 12px; font-weight: 600; }
+.occasion-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+.occasion-grid button { padding: 9px 13px; border: 1px solid #c8cebd; border-radius: 20px; color: #687167; background: transparent; font-size: 11px; }
+.occasion-grid button.selected { border-color: #35493b; color: #fff; background: #35493b; }
+.generate-button { margin-top: 22px; padding: 13px 18px; display: flex; align-items: center; gap: 9px; border: 0; border-radius: 8px; color: #fff; background: #b56949; font-size: 13px; box-shadow: 0 8px 22px #8f57342b; }
+.outfit-card { min-width: 0; margin: 22px; border-radius: 13px; overflow: hidden; background: #fff; box-shadow: 0 18px 50px #4b584126; }
+.outfit-image-wrap { position: relative; height: 352px; overflow: hidden; background: #eee; }
+.outfit-image-wrap img { width: 100%; height: 100%; object-fit: cover; animation: reveal .45s ease; }
+@keyframes reveal { from { opacity: .3; transform: scale(1.03); } to { opacity: 1; transform: scale(1); } }
+.match-badge { position: absolute; left: 14px; top: 14px; padding: 7px 10px; border-radius: 16px; color: #fff; background: #31453aaa; backdrop-filter: blur(8px); font-size: 10px; font-weight: 600; }
+.heart-button { position: absolute; right: 14px; top: 14px; width: 38px; height: 38px; border-radius: 50%; color: #4a514b; background: #ffffffdf; }
+.heart-button.liked { color: #a84e43; fill: #a84e43; }
+.outfit-info { padding: 17px 19px; display: flex; justify-content: space-between; align-items: center; }
+.outfit-info h3 { margin: 2px 0; font-family: 'Newsreader', serif; font-size: 23px; font-weight: 500; }
+.outfit-info p { color: #92968f; font-size: 11px; }
+.refresh-button { width: 37px; height: 37px; border-radius: 50%; color: #637067; background: #eef0e9; }
+
+.recent-section { margin-top: 42px; }
+.section-heading { display: flex; justify-content: space-between; align-items: end; margin-bottom: 18px; }
+.section-heading h2 { margin-top: 4px; font-size: 30px; }
+.section-heading button { display: flex; align-items: center; gap: 5px; border: 0; color: #536158; background: transparent; font-size: 12px; }
+.clothes-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.clothing-card { overflow: hidden; border-radius: 12px; background: #fff; }
+.clothing-card img { width: 100%; height: 190px; object-fit: cover; display: block; }
+.clothing-card div { padding: 14px; }
+.clothing-card h3 { margin-top: 4px; font-family: 'Newsreader', serif; font-size: 19px; font-weight: 500; }
+
+.custom-colors { --primary: var(--custom-primary); --accent: var(--custom-accent); --canvas: var(--custom-canvas); background: var(--custom-canvas) !important; }
+.custom-colors .sidebar { background: color-mix(in srgb, var(--custom-primary), transparent 6%) !important; }
+.custom-colors .generator { background: color-mix(in srgb, var(--custom-primary) 16%, var(--custom-canvas)) !important; }
+.custom-colors .generate-button,
+.custom-colors .occasion-grid button.selected { color: white !important; background: var(--custom-accent) !important; }
+.custom-colors .accent-stat { background: color-mix(in srgb, var(--custom-accent) 12%, var(--custom-canvas)) !important; }
+.custom-colors .brand-mark { color: white; background: var(--custom-accent); }
+
+.settings-layer { z-index: 50; position: fixed; inset: 0; }
+.settings-backdrop { position: absolute; inset: 0; width: 100%; border: 0; background: #0d16119c; backdrop-filter: blur(4px); }
+.settings-panel { position: absolute; top: 0; right: 0; bottom: 0; width: min(440px, 100%); padding: 34px; overflow-y: auto; color: #263229; background: #f8f7f2; box-shadow: -20px 0 60px #111b1630; animation: panel-in .28s ease; }
+@keyframes panel-in { from { transform: translateX(35px); opacity: 0; } }
+.settings-heading { display: flex; align-items: flex-start; justify-content: space-between; padding-bottom: 26px; border-bottom: 1px solid #deded6; }
+.settings-heading span, .settings-label { color: #7f897f; font-size: 9px; font-weight: 600; letter-spacing: .15em; }
+.settings-heading h2 { max-width: 280px; margin-top: 5px; font-size: 31px; line-height: 1.05; }
+.close-button { width: 36px; height: 36px; border: 1px solid #d8d8d0; border-radius: 50%; color: #4b554e; background: transparent; font-size: 24px; line-height: 1; }
+.settings-section { padding: 25px 0; border-bottom: 1px solid #deded6; }
+.app-choice-list { margin-top: 12px; display: grid; gap: 7px; }
+.app-choice-list > button { padding: 12px; display: grid; grid-template-columns: 24px 10px 1fr 20px; align-items: center; gap: 10px; border: 1px solid transparent; border-radius: 10px; color: #263229; background: transparent; text-align: left; }
+.app-choice-list > button:hover { background: #efeee8; }
+.app-choice-list > button.active { border-color: #bfc8bd; background: #e7ebe1; }
+.choice-number { color: #9a9f98; font-size: 9px; }
+.app-choice-list strong, .app-choice-list div span { display: block; }
+.app-choice-list strong { font-family: 'Newsreader', serif; font-size: 16px; font-weight: 500; }
+.app-choice-list div span { margin-top: 2px; color: #838b83; font-size: 10px; }
+.choice-check { color: #47614f; font-size: 12px; }
+.palette-title { display: flex; align-items: center; justify-content: space-between; }
+.palette-title button { border: 0; color: #7e695e; background: transparent; font-size: 10px; text-decoration: underline; }
+.color-controls { margin-top: 15px; display: grid; gap: 9px; }
+.color-controls label { padding: 11px 12px; display: flex; align-items: center; justify-content: space-between; border: 1px solid #deded6; border-radius: 9px; background: #fff; font-size: 11px; }
+.color-controls label > div { display: flex; align-items: center; gap: 9px; }
+.color-controls input { width: 29px; height: 29px; padding: 0; border: 0; border-radius: 50%; background: transparent; overflow: hidden; }
+.color-controls input::-webkit-color-swatch { border: 0; border-radius: 50%; }
+.color-controls code { color: #7e867f; font-family: inherit; font-size: 10px; }
+.save-settings { width: 100%; margin-top: 25px; padding: 14px; border: 0; border-radius: 9px; color: #fff; background: #263c30; font-size: 12px; }
+
+/* 02 — monochrome, typographique et radical */
+.app-shell[data-theme="editorial"] { --ink: #111; --muted: #686868; --primary: #111; --accent: #111; --panel: #fff; --soft: #eeeeec; --canvas: #f7f7f5; --line: #c9c9c5; }
+.app-shell[data-theme="editorial"] .generator,
+.app-shell[data-theme="editorial"] .stats-row,
+.app-shell[data-theme="editorial"] .design-picker,
+.app-shell[data-theme="editorial"] .clothing-card,
+.app-shell[data-theme="editorial"] .outfit-card { border-radius: 0; box-shadow: none; }
+.app-shell[data-theme="editorial"] .generator { background: #e8e8e4; border: 1px solid #111; }
+.app-shell[data-theme="editorial"] .generator { grid-template-columns: .85fr 1.15fr; }
+.app-shell[data-theme="editorial"] .outfit-image-wrap { height: 390px; filter: grayscale(1); }
+.app-shell[data-theme="editorial"] .generator h2,
+.app-shell[data-theme="editorial"] h1 { letter-spacing: -.04em; }
+.app-shell[data-theme="editorial"] .generate-button { border-radius: 0; background: #111; }
+.app-shell[data-theme="editorial"] .sidebar { border-radius: 0; background: #111; }
+
+/* 03 — chaleureux, expressif et méditerranéen */
+.app-shell[data-theme="solaire"] { --ink: #48281c; --muted: #946f5f; --primary: #8d4028; --accent: #c85e36; --panel: #fffaf0; --soft: #f4d9ad; --canvas: #f7eddb; --line: #dec9ab; }
+.app-shell[data-theme="solaire"] .generator { background: #f1c887; }
+.app-shell[data-theme="solaire"] .stats-row,
+.app-shell[data-theme="solaire"] .design-picker,
+.app-shell[data-theme="solaire"] .clothing-card { background: #fffaf0; }
+.app-shell[data-theme="solaire"] .generator,
+.app-shell[data-theme="solaire"] .outfit-card { border-radius: 30px; }
+.app-shell[data-theme="solaire"] .sidebar { background: #843d2ced; border-radius: 34px; }
+.app-shell[data-theme="solaire"] .generate-button { background: #b44627; border-radius: 22px; }
+.app-shell[data-theme="solaire"] .generator-copy { text-align: center; }
+.app-shell[data-theme="solaire"] .section-kicker,
+.app-shell[data-theme="solaire"] .occasion-grid { justify-content: center; }
+.app-shell[data-theme="solaire"] .generate-button { margin-left: auto; margin-right: auto; }
+
+/* 04 — digital, net et énergique */
+.app-shell[data-theme="cobalt"] { --ink: #142050; --muted: #65709e; --primary: #183ca9; --accent: #2855d9; --panel: #fff; --soft: #dfe7ff; --canvas: #f2f5ff; --line: #ced7f6; }
+.app-shell[data-theme="cobalt"] .generator { background: #dce5ff; border: 1px solid #bdcaf5; }
+.app-shell[data-theme="cobalt"] .outfit-card { order: -1; }
+.app-shell[data-theme="cobalt"] .accent-stat { background: #e0e8ff; }
+.app-shell[data-theme="cobalt"] .sidebar { background: #15369aee; }
+.app-shell[data-theme="cobalt"] .generate-button { background: #2855d9; box-shadow: 0 8px 22px #2855d930; }
+.app-shell[data-theme="cobalt"] .brand-mark { color: #173aa8; background: #dce5ff; }
+
+/* 05 — mode sombre, sophistiquée et nocturne */
+.app-shell[data-theme="nocturne"] { --ink: #f2effc; --muted: #a9a3bb; --primary: #9a82ff; --accent: #9a82ff; --panel: #211e2b; --soft: #302a45; --canvas: #16141d; --line: #393448; }
+.app-shell[data-theme="nocturne"] .stats-row,
+.app-shell[data-theme="nocturne"] .design-picker,
+.app-shell[data-theme="nocturne"] .clothing-card,
+.app-shell[data-theme="nocturne"] .outfit-card { color: var(--ink); border-color: var(--line); background: var(--panel); }
+.app-shell[data-theme="nocturne"] .generator { background: #29243a; }
+.app-shell[data-theme="nocturne"] .generator { background-image: radial-gradient(circle at 85% 15%, #6f55cb66, transparent 34%); }
+.app-shell[data-theme="nocturne"] .mini-stat { border-color: var(--line); }
+.app-shell[data-theme="nocturne"] .accent-stat { background: #342e49; }
+.app-shell[data-theme="nocturne"] .occasion-grid button { border-color: #59516f; color: #bbb3cf; }
+.app-shell[data-theme="nocturne"] .occasion-grid button.selected,
+.app-shell[data-theme="nocturne"] .generate-button { color: #16141d; background: #a891ff; }
+.app-shell[data-theme="nocturne"] .sidebar { background: #29243aed; }
+.app-shell[data-theme="nocturne"] .icon-button,
+.app-shell[data-theme="nocturne"] .search-bar { color: var(--ink); border-color: var(--line); background: var(--panel); }
+
+@media (max-width: 1000px) {
+  .stats-row { grid-template-columns: 1fr 1fr; }
+  .mini-stat:nth-child(3) { border-left: 0; border-top: 1px solid #e5e4dc; }
+  .accent-stat { border-top: 1px solid #e5e4dc; }
+  .generator { grid-template-columns: 1fr; }
+  .outfit-card { margin-top: 0; }
+  .clothes-grid { grid-template-columns: repeat(2, 1fr); }
+  .picker-intro { display: none; }
+  .design-picker { overflow-x: auto; }
+  .sidebar { grid-template-columns: 1fr; }
+  .sidebar .brand, .sidebar-bottom { display: none; }
+}
+
+@media (max-width: 720px) {
+  .app-shell { padding-bottom: 70px; }
+  .sidebar { left: 10px; right: 10px; bottom: 8px; width: auto; height: 66px; padding: 7px 12px; border-radius: 18px; }
+  .nav-list { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; }
+  .nav-item { justify-content: center; padding: 7px; }
+  .nav-item span { display: none; }
+  main { padding: 24px 16px 45px; }
+  header { align-items: flex-start; }
+  header p { max-width: 240px; }
+  .add-button { width: 43px; padding: 0; font-size: 0; }
+  .design-picker { margin: -5px -16px 18px; padding: 10px 16px; border-width: 1px 0; border-radius: 0; }
+  .theme-options button { min-width: auto; padding: 9px; }
+  .theme-options button > span:last-child { display: none; }
+  .theme-number { display: none; }
+  .stats-row { grid-template-columns: 1fr 1fr; }
+  .weather-card { grid-column: span 2; }
+  .generator-copy { padding: 34px 24px; }
+  .outfit-card { margin: 0 12px 12px; }
+  .outfit-image-wrap { height: 310px; }
+  .clothes-grid { gap: 10px; }
+  .clothing-card img { height: 150px; }
+  .section-heading button { font-size: 0; }
+}

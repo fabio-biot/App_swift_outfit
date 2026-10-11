@@ -1,52 +1,101 @@
 import SwiftUI
 
 struct ContentView: View {
-    // @State : Cette variable est "vivante". Si on ajoute un item, la vue se redessine.
-    @State private var wardrobe: [ClothingItem] = [
-        ClothingItem(name: "T-Shirt Blanc", category: .top),
-        ClothingItem(name: "Jean Bleu", category: .bottom),
-        ClothingItem(name: "Baskets", category: .shoes),
-        ClothingItem(name: "Veste en Cuir", category: .outerwear)
-    ]
+    @Bindable var store = WardrobeStore.shared
+    @Bindable var themeManager = TinaThemeManager.shared
     
+    @State private var selectedTab: TinaTab = .home
+    @State private var showingSettings = false
     @State private var showingAddItem = false
+    @State private var showingFullWardrobe = false
     
     var body: some View {
-        NavigationStack {
-            List(wardrobe) { item in
-                HStack {
-                    // Cercle avec l'icône
-                    ZStack {
-                        Circle()
-                            .fill(Color.blue.opacity(0.1))
-                            .frame(width: 40, height: 40)
-                        Image(systemName: item.category.icon)
-                            .foregroundColor(.blue)
-                    }
+        ZStack(alignment: .bottom) {
+            
+            // ── Arrière-plan Canvas du Thème ───────────────────────
+            themeManager.canvasColor
+                .ignoresSafeArea()
+            
+            // Halo lumineux radial pour le mode sombre Nocturne
+            if themeManager.activeTheme == .nocturne {
+                RadialGradient(
+                    gradient: Gradient(colors: [Color(hex: "#6F55CB").opacity(0.2), Color.clear]),
+                    center: .topTrailing,
+                    startRadius: 50,
+                    endRadius: 450
+                )
+                .ignoresSafeArea()
+            }
+            
+            // ── Contenu Principal Déroulant ───────────────────────
+            ScrollView(showsIndicators: false) {
+                VStack(spacing: 32) {
                     
-                    VStack(alignment: .leading) {
-                        Text(item.name)
-                            .font(.headline)
-                        Text(item.category.rawValue)
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                    }
+                    // 1. En-tête + Barre de recherche + Météo & Stats
+                    HeaderAndStatsView(
+                        onOpenSettings: { showingSettings = true },
+                        onOpenAddItem: { showingAddItem = true }
+                    )
+                    .padding(.top, 16)
+                    
+                    // 2. Section Générateur d'Outfits
+                    OutfitGeneratorView()
+                    
+                    // 3. Section Garde-Robe Récemment Ajoutées
+                    RecentWardrobeView(
+                        onSeeAll: { showingFullWardrobe = true }
+                    )
+                    
+                    // Espace supplémentaire pour la barre flottante inférieure
+                    Spacer(minLength: 110)
                 }
-                .padding(.vertical, 4)
+                .padding(.horizontal, 20)
+                .frame(maxWidth: 1100) // Centrage esthétique sur iPad / Mac
             }
-            .navigationTitle("Ma Garde-Robe")
-            .toolbar {
-                Button {
-                    showingAddItem = true
-                } label: {
-                    Image(systemName: "plus")
-                }
+            
+            // ── Barre de Navigation Flottante ─────────────────────
+            FloatingNavigationBar(
+                selectedTab: $selectedTab,
+                onOpenSettings: { showingSettings = true },
+                onOpenProfile: { showingSettings = true }
+            )
+            .onChange(of: selectedTab) { _, newTab in
+                handleTabSelection(newTab)
             }
-            .sheet(isPresented: $showingAddItem) {
-                AddItemView { newItem in
-                    wardrobe.append(newItem)
-                }
+        }
+        // Modales
+        .sheet(isPresented: $showingSettings) {
+            SettingsPanelSheet()
+        }
+        .sheet(isPresented: $showingAddItem) {
+            AddItemView { newItem in
+                store.addItem(newItem)
             }
+        }
+        .sheet(isPresented: $showingFullWardrobe) {
+            FullWardrobeSheet()
+        }
+        .task {
+            await store.updateWeather()
+        }
+    }
+    
+    private func handleTabSelection(_ tab: TinaTab) {
+        switch tab {
+        case .home:
+            break
+        case .wardrobe:
+            showingFullWardrobe = true
+            selectedTab = .home
+        case .generator:
+            store.generateNextOutfit()
+            selectedTab = .home
+        case .calendar:
+            // Placeholder interactif
+            selectedTab = .home
+        case .favorites:
+            showingFullWardrobe = true
+            selectedTab = .home
         }
     }
 }
