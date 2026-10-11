@@ -1,0 +1,17 @@
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Build artifacts
+build/
+*.o
+*.a
+*.dylib
+DerivedData/
+
+# Temporary files
+tmp_extracted_model/
+repo_tina/
+
+# Scratch / notes
+scrap_paper.md
